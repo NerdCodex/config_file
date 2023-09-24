@@ -4,6 +4,7 @@
 #include "read.hpp"
 #include "parser.hpp"
 
+
 using std::string;
 using std::cout;
 using std::cin;
@@ -11,34 +12,28 @@ using std::cin;
 class Configuration {
 public:
     string filename;
+    Parser p;
+    std::map<string, std::pair<string, string>> contents;
     Configuration(const string fname): filename(fname) {
         Lexer lexer(Reader(filename));
         lexer.Lex();
-        Parser p;
-        p.parse();
+        
+        
     }
-    std::variant<int, string, float> fetch(string identifier);
+    std::map<string, std::pair<string, string>> fetch();
     void putdata (string IDF, string data, string datatype);
 };
 
-
-std::variant<int, string, float> Configuration::fetch(string identifier) {
-    int index=0;
-    while(db[index].idf != identifier) index++;
-    //cout<< "DATATYPE: " << db[index].value.first << " DATA: "<<db[index].value.second<<std::endl;
-    if (db[index].value.first == "string") return db[index].value.second;
-    else if (db[index].value.first == "int") return std::stoi(db[index].value.second);
-    else if (db[index].value.first == "float") return std::stof(db[index].value.second);
-    return 0;
+std::map<string, std::pair<string, string>> Configuration::fetch() {
+    contents = p.parse();
+    return contents;
 }
 
 
+
 void Configuration::putdata(string IDF, string data, string datatype) {
-    int index = 0;
-    while(db[index].idf != IDF && db[index].idf != "\0") {
-        index++;
-    }
-    if (index != DATABASE_INDEX) {
+    
+    if (auto element = contents.find(IDF); element == contents.end()) {
         std::ofstream outputfile;
         outputfile.open(filename, std::ios::app);
         if (!outputfile.is_open()) {

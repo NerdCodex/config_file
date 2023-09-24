@@ -1,6 +1,6 @@
 #include<iostream>
 #include<string>
-#include "database.hpp"
+#include<map>
 
 using std::cout;
 
@@ -11,7 +11,7 @@ public:
     Parser(): pos(0) {}
     void advance();
     Tokens getcurrenttoken();
-    void parse();
+    std::map<std::string, std::pair<std::string, std::string>> parse();
 };
 
 void Parser::advance() {
@@ -23,25 +23,28 @@ Tokens Parser::getcurrenttoken() {
     return {"\0", "\0"};
 }
 
-void Parser::parse() {
+std::map<std::string, std::pair<std::string, std::string>> Parser::parse() {
+    std::map<std::string, std::pair<std::string, std::string>> config;
+    std::string idf, value, dtype;
     while (getcurrenttoken().type != "\0"){
         if (getcurrenttoken().type == "IDENTIFIER") {
-            db[DATABASE_INDEX].idf = getcurrenttoken().value;
+            idf = getcurrenttoken().value;
             advance();
 
         } else if (getcurrenttoken().type == "DATATYPE"){
-            db[DATABASE_INDEX].value.first = getcurrenttoken().value;
+            dtype = getcurrenttoken().value;
             advance();
             if (getcurrenttoken().type == "DATA") {
-                db[DATABASE_INDEX].value.second = getcurrenttoken().value;
+                value = getcurrenttoken().value;
                 advance();
             } else {
-                std::cerr << "Value is not assigned properly for "<< db[DATABASE_INDEX].idf << std::endl;
+                std::cerr << "Value is not assigned properly for "<< idf << std::endl;
                 break;
             }
         } else {
             advance();
         }
+        config[idf] = {dtype, value};
     }
-    
+    return config;
 }

@@ -2,7 +2,10 @@
 #include "Configuration/config.hpp"
 
 int main() {
+    std::map<std::string, std::pair<std::string, std::string>> configure;
     Configuration conf("gpl.conf");
-    std::cout<<std::get<string>(conf.fetch("username"))<<std::endl;
+    configure = conf.fetch();
+    std::cout<<configure["name"].second<<std::endl;
+    conf.putdata("username", "subburakesh@gpl.com", "string");
     return 0;
 }
