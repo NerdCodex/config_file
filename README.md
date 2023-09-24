@@ -1,5 +1,5 @@
 # Configuration File
-<b> This repository contains a configuration file named `config.txt` that is used to store various settings and parameters for programs in c++. </b>
+<b> This repository contains a configuration file named `gpl.conf` that is used to store various settings and parameters for programs in c++. </b>
 
 # Syntax
 ``` conf
