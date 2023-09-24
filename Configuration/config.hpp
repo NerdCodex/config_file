@@ -10,9 +10,10 @@ using std::cout;
 using std::cin;
 
 class Configuration {
+Parser p;
 public:
     string filename;
-    Parser p;
+    
     std::map<string, std::pair<string, string>> contents;
     Configuration(const string fname): filename(fname) {
         Lexer lexer(Reader(filename));
