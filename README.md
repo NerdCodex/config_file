@@ -6,7 +6,7 @@
   #Text file
   name [string] = "Subbu Rakesh"
   age [int] = "10"
-  username [string] = "subburakesh@gpl.com";
+  username [string] = "subburakesh@gpl.com"
 ```
 
 # Usage
