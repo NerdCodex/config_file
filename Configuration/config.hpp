@@ -40,7 +40,7 @@ void Configuration::putdata(string IDF, string data, string datatype) {
         if (!outputfile.is_open()) {
             std::cerr << "Error: Unable to open the file "<< filename << std::endl;
         }
-        outputfile << IDF << " [" << datatype << "] " << "= " << "\"" << data << "\";" <<std::endl;
+        outputfile << IDF << " [" << datatype << "] " << "= " << "\"" << data << "\"" <<std::endl;
 
         outputfile.close(); 
     } else {
